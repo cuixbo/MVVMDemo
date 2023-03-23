@@ -1,7 +1,11 @@
 package com.cuixbo.mvvm.net.core
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
 import com.google.gson.JsonParseException
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.*
 import org.json.JSONException
 import retrofit2.HttpException
 import java.io.IOException
@@ -23,6 +27,20 @@ open class BaseRepo {
         }
         return EmptyResponse()
     }
+
+    suspend fun <T> fetchFlow(block: suspend () -> ApiResponse<T>): Flow<ApiResponse<T>> =
+        flow {
+            println("fetch-blocking")
+            val res = block()
+            delay(3000)
+            emit(handleHttpSuccess(res))
+        }.onStart {
+            emit(StartResponse())
+        }.onCompletion {
+            emit(CompleteResponse())
+        }.catch {
+            emit(handleHttpFailure(it))
+        }.flowOn(Dispatchers.IO)
 
     private fun <T> handleHttpSuccess(res: ApiResponse<T>): ApiResponse<T> {
         // 判断 errcode码 ，区分是业务正常还是异常
