@@ -4,10 +4,15 @@ import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.cuixbo.mvvm.R
+import com.cuixbo.mvvm.net.core.HttpRequestCallback
+import com.cuixbo.mvvm.net.core.collectState
 import com.cuixbo.mvvm.net.core.observeState
 import com.cuixbo.mvvm.ui.viewmodel.HomeViewModel
+import kotlinx.coroutines.flow.launchIn
 
 
 class MainActivity : AppCompatActivity() {
@@ -54,6 +59,7 @@ class MainActivity : AppCompatActivity() {
 //            }
 //        )
 
+        // LiveData 方式
         homeViewModel.liveArticles.observeState(this) {
             onStart {
                 println("onStart")
@@ -75,6 +81,49 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+
+        lifecycleScope.launchWhenCreated {
+            // Flow 方式
+//            homeViewModel.articlesFlow.collect {
+//                when {
+//                    it.isStart() -> {
+//                        println("isStart")
+//                    }
+//                    it.isEmpty() -> {
+//                        println("isEmpty")
+//                    }
+//                    it.isFailure() -> {
+//                        println("isFailure")
+//                    }
+//                    it.isComplete() -> {
+//                        println("isComplete")
+//                    }
+//                }
+//            }
+            // Flow + DSL 方式
+            homeViewModel.articlesFlow.collectState {
+                onStart {
+                    println("onStart")
+                    tvContent.text = "loading"
+                }
+                onSuccess {
+                    println("onSuccess")
+                    tvContent.text = it.datas.toString()
+                }
+                onEmpty {
+                    println("onEmpty")
+                }
+                onFailure {
+                    println("onFailure")
+                    tvContent.text = it.errorMsg
+                }
+                onFinish {
+                    println("onFinish")
+                }
+            }
+        }
+
+
 //        homeViewModel.articles3.observeState(this) {
 //           it.onStart{
 //
@@ -94,6 +143,7 @@ class MainActivity : AppCompatActivity() {
 
         lifecycleScope.launchWhenStarted {
             homeViewModel.getHomeArticle()
+//            homeViewModel.getHomeArticle()
         }
     }
 

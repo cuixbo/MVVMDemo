@@ -10,6 +10,12 @@ open class ApiResponse<T>(
         get() {
             return errorCode == 0
         }
+
+    fun isStart() = this is StartResponse<T>
+    fun isSuccess() = this is SuccessResponse<T>
+    fun isEmpty() = this is EmptyResponse<T>
+    fun isFailure() = this is FailureResponse<T>
+    fun isComplete() = this is CompleteResponse<T>
 }
 
 class StartResponse<T> : ApiResponse<T>()
@@ -18,7 +24,8 @@ data class SuccessResponse<T>(override val data: T) : ApiResponse<T>(data)
 
 class EmptyResponse<T> : ApiResponse<T>()
 
-data class FailureResponse<T>(override val exception: RequestException) : ApiResponse<T>(exception = exception)
+data class FailureResponse<T>(override val exception: RequestException) :
+    ApiResponse<T>(exception = exception)
 
 data class ExceptionResponse<T>(override val exception: RequestException) :
     ApiResponse<T>(exception = exception)

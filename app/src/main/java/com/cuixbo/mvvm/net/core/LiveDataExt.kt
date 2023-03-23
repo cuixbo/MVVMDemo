@@ -3,6 +3,8 @@ package com.cuixbo.mvvm.net.core
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
 
 
 fun <T> LiveData<ApiResponse<T>>.observeState(
@@ -83,6 +85,33 @@ suspend fun <T> MutableLiveData<ApiResponse<T>>.fire(block: suspend () -> ApiRes
     this.value = block()
     this.value = CompleteResponse()
 }
+
+
+suspend fun <T> Flow<ApiResponse<T>>.collectState(
+    callback: HttpRequestCallback<T>.() -> Unit
+) {
+    val cb = HttpRequestCallback<T>().apply(callback)
+    collect {
+        when (it) {
+            is StartResponse -> {
+                cb.startCallback?.invoke()
+            }
+            is SuccessResponse -> {
+                cb.successCallback?.invoke(it.data)
+            }
+            is EmptyResponse -> {
+                cb.emptyCallback?.invoke()
+            }
+            is FailureResponse -> {
+                cb.failureCallback?.invoke(it.exception)
+            }
+            is CompleteResponse -> {
+                cb.finishCallback?.invoke()
+            }
+        }
+    }
+}
+
 
 //
 //typealias MyCallbacks<T> = (
