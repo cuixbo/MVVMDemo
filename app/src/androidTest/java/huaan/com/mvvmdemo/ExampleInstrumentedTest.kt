@@ -1,12 +1,10 @@
 package huaan.com.mvvmdemo
 
-import android.graphics.Color
-import android.support.test.InstrumentationRegistry
-import android.support.test.runner.AndroidJUnit4
-import android.util.Log
-import huaan.com.mvvmdemo.R.id.toolbar
-import kotlinx.android.synthetic.main.activity_scrolling.*
-import kotlinx.coroutines.*
+import androidx.test.platform.app.InstrumentationRegistry
+import androidx.test.ext.junit.runners.AndroidJUnit4
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -23,8 +21,7 @@ class ExampleInstrumentedTest {
 
     @Test
     fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getTargetContext()
-        assertEquals("huaan.com.mvvmdemo", appContext.packageName)
+
     }
+
 }

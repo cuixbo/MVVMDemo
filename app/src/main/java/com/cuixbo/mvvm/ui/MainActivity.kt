@@ -1,18 +1,15 @@
 package com.cuixbo.mvvm.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.flowWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import com.cuixbo.mvvm.R
-import com.cuixbo.mvvm.net.core.HttpRequestCallback
 import com.cuixbo.mvvm.net.core.collectState
 import com.cuixbo.mvvm.net.core.observeState
 import com.cuixbo.mvvm.ui.viewmodel.HomeViewModel
-import kotlinx.coroutines.flow.launchIn
 
 
 class MainActivity : AppCompatActivity() {
@@ -22,6 +19,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         tvContent = findViewById(R.id.tv_content)
+        startActivity(Intent(this, SingleActivity::class.java))
+        if(true) return
 //        homeViewModel.articles.observe(this) {
 //            when (it) {
 //                is LoadState.Loading -> {
@@ -64,6 +63,8 @@ class MainActivity : AppCompatActivity() {
             onStart {
                 println("onStart")
                 tvContent.text = "loading"
+
+
             }
             onSuccess {
                 println("onSuccess")
@@ -142,8 +143,8 @@ class MainActivity : AppCompatActivity() {
 
 
         lifecycleScope.launchWhenStarted {
-            homeViewModel.getHomeArticle()
 //            homeViewModel.getHomeArticle()
+            homeViewModel.getHomeArticleZip()
         }
     }
 

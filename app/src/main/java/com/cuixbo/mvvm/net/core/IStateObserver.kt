@@ -3,14 +3,26 @@ package com.cuixbo.mvvm.net.core
 import androidx.lifecycle.Observer
 
 interface IStateObserver<T> : Observer<ApiResponse<T>> {
-    override fun onChanged(t: ApiResponse<T>?) {
-        when (t) {
-            is StartResponse -> {onStart()}
-            is SuccessResponse -> {onSuccess(t.data)}
-            is EmptyResponse -> {onEmpty()}
-            is FailureResponse -> {onFailure(t.exception)}
-            is ExceptionResponse -> {onException(t.exception)}
-            is CompleteResponse -> {onFinish()}
+    override fun onChanged(value: ApiResponse<T>) {
+        when (value) {
+            is StartResponse -> {
+                onStart()
+            }
+            is SuccessResponse -> {
+                onSuccess(value.data)
+            }
+            is EmptyResponse -> {
+                onEmpty()
+            }
+            is FailureResponse -> {
+                onFailure(value.exception)
+            }
+            is ExceptionResponse -> {
+                onException(value.exception)
+            }
+            is CompleteResponse -> {
+                onFinish()
+            }
         }
     }
 

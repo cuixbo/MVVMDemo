@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    android:paddingTop="100dp"
+    tools:context=".ui.MainActivity">
+
+
+    <Button
+        android:id="@+id/btn_question"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="回答问题" />
+
+    <Button
+        android:id="@+id/btn_route"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="路由跳转" />
+
+    <Button
+        android:id="@+id/btn_notif"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="发送通知" />
+
+    <Button
+        android:id="@+id/btn_deeplink"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="deeplink跳转" />
+
+    <Button
+        android:id="@+id/btn_state"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="SavedStateHandle" />
+
+    <Button
+        android:id="@+id/btn_data_binding"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="DataBiding" />
+
+
+    <Button
+        android:id="@+id/btn_movies"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="Movies" />
+
+    <Button
+        android:id="@+id/btn_lag"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="卡顿监测" />
+
+    <Button
+        android:id="@+id/btn_so"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="动态加载so" />
+
+</LinearLayout>

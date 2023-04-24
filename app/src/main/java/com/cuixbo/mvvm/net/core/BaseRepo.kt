@@ -32,7 +32,7 @@ open class BaseRepo {
         flow {
             println("fetch-blocking")
             val res = block()
-            delay(3000)
+            delay(10000)
             emit(handleHttpSuccess(res))
         }.onStart {
             emit(StartResponse())
@@ -41,6 +41,23 @@ open class BaseRepo {
         }.catch {
             emit(handleHttpFailure(it))
         }.flowOn(Dispatchers.IO)
+
+
+    suspend fun <T> asyncCall(block: suspend () -> ApiResponse<T>): Pair<RequestException?, ApiResponse<T>?> {
+        runCatching {
+            println("fetch-blocking")
+            block()
+        }.onSuccess {
+            println("fetch-onSuccess")
+            // 网络、解析、转换等都正常返回
+            return Pair(null, handleHttpSuccess(it))
+        }.onFailure {
+            println("fetch-onFailure")
+            // 上述有失败的情况
+            return Pair(handleException(it), null)
+        }
+        return Pair(null, null)
+    }
 
     private fun <T> handleHttpSuccess(res: ApiResponse<T>): ApiResponse<T> {
         // 判断 errcode码 ，区分是业务正常还是异常

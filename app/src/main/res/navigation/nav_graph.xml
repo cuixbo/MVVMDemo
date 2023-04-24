@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/single_nav"
+    app:startDestination="@id/home">
+
+    <fragment
+        android:id="@+id/home"
+        android:name="com.cuixbo.mvvm.ui.fragment.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/action_home_to_question"
+            app:destination="@id/question" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/question"
+        android:name="com.cuixbo.mvvm.ui.fragment.QuestionFragment"
+        android:label="QuestionFragment"
+        tools:layout="@layout/fragment_question">
+        <action
+            android:id="@+id/action_question_to_java"
+            app:destination="@id/java" />
+
+        <action
+            android:id="@+id/action_question_to_kotlin"
+            app:destination="@id/kotlin" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/java"
+        android:name="com.cuixbo.mvvm.ui.fragment.JavaFragment"
+        android:label="JavaFragment"
+        tools:layout="@layout/fragment_java">
+        <action
+            android:id="@+id/action_java_to_success"
+            app:destination="@id/success" />
+        <action
+            android:id="@+id/action_java_to_failed"
+            app:destination="@id/failed" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/kotlin"
+        android:name="com.cuixbo.mvvm.ui.fragment.KotlinFragment"
+        android:label="KotlinFragment"
+        tools:layout="@layout/fragment_kotlin">
+        <action
+            android:id="@+id/action_kotlin_to_success"
+            app:destination="@id/success"
+            app:popUpTo="@id/question"
+            app:popUpToInclusive="false" />
+        <!--
+            app:enterAnim=新页面进入的动画
+            app:exitAnim=旧页面退出的动画
+            app:popEnterAnim=旧页面进入的动画
+            app:popExitAnim=新页面退出的动画
+        -->
+        <action
+            android:id="@+id/action_kotlin_to_failed"
+            app:destination="@id/failed"
+            app:enterAnim="@anim/slide_in_top"
+            app:popExitAnim="@anim/slide_out_bottom" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/success"
+        android:name="com.cuixbo.mvvm.ui.fragment.SuccessFragment"
+        android:label="SuccessFragment"
+        tools:layout="@layout/fragment_success">
+        <deepLink app:uri="cxb://cuixbo.com/success/{lan}" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/failed"
+        android:name="com.cuixbo.mvvm.ui.fragment.FailedFragment"
+        android:label="FailedFragment"
+        app:route="result_failed"
+        tools:layout="@layout/fragment_failed" />
+
+    <fragment
+        android:id="@+id/movie"
+        android:name="com.cuixbo.mvvm.ui.paging.MoviePagingFragment"
+        android:label="MovieFragment"
+        app:route="movie"
+        tools:layout="@layout/fragment_movie" />
+
+    <fragment
+        android:id="@+id/lag"
+        android:name="com.cuixbo.mvvm.ui.fragment.LagFragment"
+        android:label="LagFragment"
+        app:route="lag"
+        tools:layout="@layout/fragment_movie" />
+
+    <fragment
+        android:id="@+id/so"
+        android:name="com.cuixbo.mvvm.ui.fragment.SoFragment"
+        android:label="SoFragment"
+        app:route="so"
+        tools:layout="@layout/fragment_movie" />
+
+    <activity
+        android:id="@+id/state"
+        android:name="com.cuixbo.mvvm.ui.StateChangeActivity"
+        android:label="StateChangeActivity"
+        tools:layout="@layout/activity_state_change" />
+
+</navigation>

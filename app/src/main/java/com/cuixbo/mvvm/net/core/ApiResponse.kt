@@ -1,11 +1,13 @@
 package com.cuixbo.mvvm.net.core
 
+import java.io.Serializable
+
 open class ApiResponse<T>(
     open val data: T? = null,
     open val errorCode: Int? = null,
     open val errorMsg: String? = null,
     open val exception: RequestException? = null,
-) {
+) : Serializable {
     val success: Boolean
         get() {
             return errorCode == 0
